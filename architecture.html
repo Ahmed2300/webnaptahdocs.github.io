@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Napta (نبتة) | Technical Architecture</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="sidebar">
+        <h1><i class="fas fa-leaf"></i> Napta Web</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="nav-link"><i class="fas fa-fw fa-home"></i> Home</a></li>
+                <li><a href="overview.html" class="nav-link"><i class="fas fa-fw fa-info-circle"></i> Overview</a></li>
+                <li><a href="architecture.html" class="nav-link active"><i class="fas fa-fw fa-sitemap"></i> Architecture</a></li>
+                <li><a href="tech_stack.html" class="nav-link"><i class="fas fa-fw fa-cogs"></i> Tech Stack</a></li>
+                <li>
+                    <a href="#" class="nav-link"><i class="fas fa-fw fa-star"></i> Core Features</a>
+                    <ul class="sub-menu">
+                        <li><a href="feature_ai_diagnosis.html" class="nav-link"><i class="fas fa-fw fa-brain"></i> AI Plant Diagnosis</a></li>
+                        <li><a href="feature_community.html" class="nav-link"><i class="fas fa-fw fa-users"></i> Community Platform</a></li>
+                        <li><a href="feature_marketplace.html" class="nav-link"><i class="fas fa-fw fa-shopping-cart"></i> Marketplace</a></li>
+                        <li><a href="feature_profile.html" class="nav-link"><i class="fas fa-fw fa-user-circle"></i> User Profiles</a></li>
+                    </ul>
+                </li>
+                <li><a href="ui_design.html" class="nav-link"><i class="fas fa-fw fa-palette"></i> UI/UX Design</a></li>
+                <li><a href="api_integration.html" class="nav-link"><i class="fas fa-fw fa-plug"></i> API Integration</a></li>
+                <li><a href="deployment.html" class="nav-link"><i class="fas fa-fw fa-rocket"></i> Deployment</a></li>
+                <li><a href="team.html" class="nav-link"><i class="fas fa-fw fa-people-group"></i> Team</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h2>Technical Architecture</h2>
+            <p>Detailed System Design and Component Structure</p>
+        </header>
+
+        <section>
+            <h3><i class="fas fa-layer-group"></i> Application Architecture</h3>
+            <p>Napta follows a modern React-based architecture with clear separation of concerns and modular component design.</p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cubes"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Component-Based Architecture</h4>
+                        <p>Reusable React components with TypeScript for type safety, enabling rapid development and easy maintenance.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Firebase Backend</h4>
+                        <p>Serverless architecture with Firebase Authentication and Realtime Database for scalable data management.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Client-Side Routing</h4>
+                        <p>React Router DOM handles navigation with protected routes and seamless page transitions.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sync"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Real-Time Synchronization</h4>
+                        <p>Firebase listeners provide instant updates across all connected clients for community features.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-folder-tree"></i> Project Structure</h3>
+            <pre>
+napta-web/
+├── src/
+│   ├── components/          # React components
+│   │   ├── DesktopHeader.tsx
+│   │   ├── DesktopScanPage.tsx
+│   │   ├── DesktopLoadingState.tsx
+│   │   ├── DesktopResultsDisplay.tsx
+│   │   ├── Community.tsx
+│   │   ├── PostCard.tsx
+│   │   ├── ProfilePage.tsx
+│   │   ├── Marketplace.tsx
+│   │   └── ...
+│   ├── contexts/            # React contexts
+│   │   ├── AuthContext.tsx
+│   │   └── LanguageContext.tsx
+│   ├── lib/                 # Utility libraries
+│   │   ├── gemini.ts
+│   │   ├── communityService.ts
+│   │   ├── userStatsService.ts
+│   │   ├── guestScanService.ts
+│   │   └── ...
+│   ├── services/            # API services
+│   │   ├── paypalService.ts
+│   │   ├── marketplaceService.ts
+│   │   └── productSearch.ts
+│   ├── locales/             # i18n translations
+│   │   ├── en/
+│   │   └── ar/
+│   ├── assets/              # Static assets
+│   │   └── largeBrand.png
+│   ├── App.tsx              # Main app component
+│   ├── firebase.ts          # Firebase configuration
+│   └── main.tsx             # Application entry point
+├── public/                  # Public assets
+│   ├── _redirects           # Netlify routing
+│   └── index.html
+├── package.json
+├── tsconfig.json
+├── tailwind.config.js
+├── vite.config.ts
+└── netlify.toml
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-diagram-project"></i> Component Hierarchy</h3>
+            <div class="highlights-grid">
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <div>
+                        <h4>App.tsx (Root)</h4>
+                        <p>Main application container with routing, authentication state, and global providers.</p>
+                    </div>
+                </div>
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                    <div>
+                        <h4>DesktopHeader</h4>
+                        <p>Persistent navigation header with user menu, language switcher, and page links.</p>
+                    </div>
+                </div>
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div>
+                        <h4>WelcomePage</h4>
+                        <p>Marketing landing page with hero section, features, testimonials, and call-to-action.</p>
+                    </div>
+                </div>
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <div>
+                        <h4>DesktopScanPage</h4>
+                        <p>Two-column scan interface with drag-and-drop upload and real-time analysis.</p>
+                    </div>
+                </div>
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div>
+                        <h4>Community</h4>
+                        <p>Real-time community dashboard with posts, comments, voting, and user profiles.</p>
+                    </div>
+                </div>
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div>
+                        <h4>Marketplace</h4>
+                        <p>Product discovery with AI recommendations, shopping cart, and seller management.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-database"></i> Data Flow Architecture</h3>
+            <p><strong>1. Authentication Flow:</strong></p>
+            <pre>
+User Login → Firebase Auth → AuthContext → 
+User Profile Fetch → Real-time Listener Setup →
+Profile State Update → Component Re-render
+            </pre>
+            
+            <p><strong>2. AI Diagnosis Flow:</strong></p>
+            <pre>
+Image Upload → Base64 Encoding → Gemini API Request →
+AI Analysis → Result Processing → History Save →
+Display Results → Update Statistics
+            </pre>
+            
+            <p><strong>3. Community Interaction Flow:</strong></p>
+            <pre>
+User Action (Post/Vote/Comment) → Firebase Transaction →
+Realtime Database Update → All Clients Receive Update →
+Local State Update → UI Re-render
+            </pre>
+            
+            <p><strong>4. Marketplace Flow:</strong></p>
+            <pre>
+Diagnosis Result → AI Product Matching →
+Product Recommendations → User Cart → Order Placement →
+Firebase Order Storage → Seller Notification
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-shield-halved"></i> State Management</h3>
+            <ul class="feature-list">
+                <li><strong>React Context API</strong> - Global state for authentication and language preferences</li>
+                <li><strong>useState Hooks</strong> - Local component state for UI interactions</li>
+                <li><strong>useEffect Hooks</strong> - Side effects and Firebase listeners setup/cleanup</li>
+                <li><strong>localStorage</strong> - Client-side persistence for history and guest scan tracking</li>
+                <li><strong>Firebase Realtime Listeners</strong> - Server-side state synchronization</li>
+                <li><strong>Transaction-Based Updates</strong> - Atomic operations for voting and reputation</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-lock"></i> Security Architecture</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Authentication Security</h4>
+                        <p>Firebase Authentication with Google OAuth2, session management, and secure token handling.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Database Rules</h4>
+                        <p>Firebase security rules enforce read/write permissions based on authentication status and user ownership.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>API Key Management</h4>
+                        <p>Environment variables for sensitive credentials with automatic rotation for Gemini API keys.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Route Protection</h4>
+                        <p>Protected routes with authentication checks and automatic redirection for unauthorized access.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-bolt"></i> Performance Optimizations</h3>
+            <ul class="feature-list">
+                <li><strong>Code Splitting</strong> - Dynamic imports for reduced initial bundle size</li>
+                <li><strong>Lazy Loading</strong> - Components loaded on-demand for faster page loads</li>
+                <li><strong>Image Optimization</strong> - Base64 encoding with compression for efficient storage</li>
+                <li><strong>Vite Build Tool</strong> - Lightning-fast HMR and optimized production builds</li>
+                <li><strong>Memoization</strong> - React.memo and useMemo for preventing unnecessary re-renders</li>
+                <li><strong>API Key Rotation</strong> - Load balancing across 7 Gemini API keys</li>
+                <li><strong>Real-time Listeners</strong> - Efficient Firebase listeners with proper cleanup</li>
+                <li><strong>Tailwind CSS Purging</strong> - Removes unused CSS classes in production builds</li>
+            </ul>
+        </section>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

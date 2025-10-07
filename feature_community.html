@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Napta (نبتة) | Community Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="sidebar">
+        <h1><i class="fas fa-leaf"></i> Napta Web</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="nav-link"><i class="fas fa-fw fa-home"></i> Home</a></li>
+                <li><a href="overview.html" class="nav-link"><i class="fas fa-fw fa-info-circle"></i> Overview</a></li>
+                <li><a href="architecture.html" class="nav-link"><i class="fas fa-fw fa-sitemap"></i> Architecture</a></li>
+                <li><a href="tech_stack.html" class="nav-link"><i class="fas fa-fw fa-cogs"></i> Tech Stack</a></li>
+                <li>
+                    <a href="#" class="nav-link"><i class="fas fa-fw fa-star"></i> Core Features</a>
+                    <ul class="sub-menu">
+                        <li><a href="feature_ai_diagnosis.html" class="nav-link"><i class="fas fa-fw fa-brain"></i> AI Plant Diagnosis</a></li>
+                        <li><a href="feature_community.html" class="nav-link active"><i class="fas fa-fw fa-users"></i> Community Platform</a></li>
+                        <li><a href="feature_marketplace.html" class="nav-link"><i class="fas fa-fw fa-shopping-cart"></i> Marketplace</a></li>
+                        <li><a href="feature_profile.html" class="nav-link"><i class="fas fa-fw fa-user-circle"></i> User Profiles</a></li>
+                    </ul>
+                </li>
+                <li><a href="ui_design.html" class="nav-link"><i class="fas fa-fw fa-palette"></i> UI/UX Design</a></li>
+                <li><a href="api_integration.html" class="nav-link"><i class="fas fa-fw fa-plug"></i> API Integration</a></li>
+                <li><a href="deployment.html" class="nav-link"><i class="fas fa-fw fa-rocket"></i> Deployment</a></li>
+                <li><a href="team.html" class="nav-link"><i class="fas fa-fw fa-people-group"></i> Team</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h2>Community Platform</h2>
+            <p>Real-Time Social Network for Agricultural Knowledge Sharing</p>
+        </header>
+
+        <section>
+            <h3><i class="fas fa-users"></i> Feature Overview</h3>
+            <p>
+                The community platform transforms Napta from a simple diagnostic tool into a thriving social network for agricultural 
+                enthusiasts. Users can share experiences, ask questions, vote on helpful content, and build reputation through 
+                meaningful contributions. The platform features real-time updates, nested comments, achievement badges, and a 
+                sophisticated user level system similar to modern social media platforms.
+            </p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-bolt"></i>
+                    <h4>Real-Time</h4>
+                    <p>Firebase Sync</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-comments"></i>
+                    <h4>Nested</h4>
+                    <p>Threaded Comments</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-award"></i>
+                    <h4>Gamification</h4>
+                    <p>Badges & Levels</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-heart"></i>
+                    <h4>Voting</h4>
+                    <p>System</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-hashtag"></i> Community Channels</h3>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-stethoscope"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>#Plant-Diagnosis</h4>
+                        <p>Users share plant problems, get community feedback, and receive expert diagnosis help.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>#Gardening-Guides</h4>
+                        <p>Tips, tutorials, and best practices for plant care, seasonal planting, and crop management.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>#General-Discussion</h4>
+                        <p>Open forum for agricultural topics, equipment reviews, and community announcements.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-code"></i> Technical Implementation</h3>
+            
+            <h4>Firebase Realtime Database Structure</h4>
+            <pre>
+{
+  "posts": {
+    "postId": {
+      "id": "unique_id",
+      "authorUid": "user_id",
+      "authorDisplayName": "Ahmed Azam",
+      "authorPhotoURL": "https://...",
+      "channelId": "plant-diagnosis",
+      "title": "Tomato Leaf Yellowing Problem",
+      "content": "Need help identifying this disease...",
+      "imageUrl": "https://imgbb.com/...",
+      "voteCount": 15,
+      "commentCount": 8,
+      "createdAt": 1698765432000,
+      "aiAnalysis": {
+        "confidence": 92,
+        "diseaseName": "Late Blight"
+      }
+    }
+  },
+  "comments": {
+    "postId": {
+      "commentId": {
+        "id": "comment_id",
+        "authorUid": "user_id",
+        "content": "Looks like late blight...",
+        "createdAt": 1698765555000,
+        "parentId": null  // For nested comments
+      }
+    }
+  },
+  "votes": {
+    "postId": {
+      "userId": true  // User has voted
+    }
+  },
+  "users": {
+    "userId": {
+      "displayName": "Ahmed Azam",
+      "photoURL": "https://...",
+      "reputation": 150,
+      "stats": {
+        "scansCompleted": 25,
+        "postsCreated": 12,
+        "reputation": 150
+      },
+      "badges": {
+        "firstPost": true,
+        "problemSolver": true
+      }
+    }
+  }
+}
+            </pre>
+            
+            <h4>Voting System with Transaction Safety</h4>
+            <pre>
+// Transaction-based voting prevents race conditions
+export const voteOnPost = async (postId: string): Promise<VoteResult> => {
+  const user = auth.currentUser;
+  if (!user) throw new Error('Must be logged in');
+  
+  const voteRef = ref(database, `votes/${postId}/${user.uid}`);
+  const postVoteRef = ref(database, `posts/${postId}/voteCount`);
+  
+  const voteSnapshot = await get(voteRef);
+  const hasVoted = voteSnapshot.exists();
+  
+  // Use transaction for atomic update
+  await runTransaction(postVoteRef, (currentVotes) => {
+    if (hasVoted) {
+      // Remove vote
+      remove(voteRef);
+      return (currentVotes || 1) - 1;
+    } else {
+      // Add vote
+      set(voteRef, true);
+      return (currentVotes || 0) + 1;
+    }
+  });
+  
+  return {
+    hasVoted: !hasVoted,
+    newVoteCount: await getVoteCount(postId)
+  };
+};
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-trophy"></i> Gamification System</h3>
+            
+            <h4>User Level System</h4>
+            <div class="highlights-grid">
+                <div class="highlight-item">
+                    <div class="highlight-icon" style="color: #9333ea;">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <div>
+                        <h4>Expert (50+ points)</h4>
+                        <p>Purple badge - Top contributors with extensive community engagement</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon" style="color: #3b82f6;">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div>
+                        <h4>Advanced (25+ points)</h4>
+                        <p>Blue badge - Active members with proven helpful contributions</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon" style="color: #10b981;">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div>
+                        <h4>Intermediate (10+ points)</h4>
+                        <p>Green badge - Regular contributors building their reputation</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon" style="color: #f59e0b;">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div>
+                        <h4>Beginner (3+ points)</h4>
+                        <p>Yellow badge - New contributors starting their journey</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon" style="color: #6b7280;">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div>
+                        <h4>Newcomer (<3 points)</h4>
+                        <p>Gray badge - Just joined the community</p>
+                    </div>
+                </div>
+            </div>
+            
+            <h4>Engagement Point Calculation</h4>
+            <pre>
+// User level based on engagement
+const calculateUserLevel = (post: Post): UserLevel => {
+  const engagementPoints = (post.voteCount * 2) + post.commentCount;
+  
+  if (engagementPoints >= 50) return 'Expert';
+  if (engagementPoints >= 25) return 'Advanced';
+  if (engagementPoints >= 10) return 'Intermediate';
+  if (engagementPoints >= 3) return 'Beginner';
+  return 'Newcomer';
+};
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-medal"></i> Achievement Badges</h3>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-pen"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>First Post</h4>
+                        <p>Awarded for creating your first community post</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Problem Solver</h4>
+                        <p>Earned when your answer receives 10+ votes</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Plant Expert</h4>
+                        <p>Complete 50+ scans and share 20+ posts</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Community Leader</h4>
+                        <p>100+ reputation points from helpful contributions</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Scan Master</h4>
+                        <p>Complete 100+ plant disease scans</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Active Member</h4>
+                        <p>Post or comment every day for 7 consecutive days</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-id-card"></i> User Profile Cards</h3>
+            
+            <p>Discord-style floating profile cards appear when clicking on user avatars:</p>
+            
+            <ul class="feature-list">
+                <li><strong>Smart Positioning</strong> - Automatically positions to stay within viewport</li>
+                <li><strong>Real-Time Data</strong> - Fetches complete user profile from Firebase</li>
+                <li><strong>Cover Photo</strong> - Gradient background with optional custom cover image</li>
+                <li><strong>Profile Picture</strong> - Large 80px avatar with online status indicator</li>
+                <li><strong>User Level Badge</strong> - Dynamic badge showing engagement level</li>
+                <li><strong>Statistics Grid</strong> - Shows scans, posts, and reputation points</li>
+                <li><strong>Achievement Badges</strong> - Displays earned badges with icons</li>
+                <li><strong>Quick Actions</strong> - Message and view profile buttons</li>
+                <li><strong>Keyboard Support</strong> - Escape key closes the card</li>
+                <li><strong>Click Outside</strong> - Card closes when clicking outside</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-sidebar"></i> Left Sidebar User Info</h3>
+            
+            <p>Comprehensive user profile sidebar (desktop only) featuring:</p>
+            
+            <div class="highlights-grid">
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div>
+                        <h4>Profile Card</h4>
+                        <p>Cover photo, profile picture, user level, and bio section</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <h4>Statistics Dashboard</h4>
+                        <p>3-column grid with scans, posts, and reputation with color coding</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div>
+                        <h4>Achievements</h4>
+                        <p>Dynamic badges based on user activity with icons and descriptions</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div>
+                        <h4>Activity Tracking</h4>
+                        <p>Monthly stats, community rank, and activity streak counters</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    <div>
+                        <h4>Social Links</h4>
+                        <p>LinkedIn and personal website connection buttons</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-thumbtack"></i>
+                    </div>
+                    <div>
+                        <h4>Sticky Positioning</h4>
+                        <p>Sidebar stays visible while scrolling for easy access</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-sync"></i> Vote Synchronization</h3>
+            
+            <p><strong>Challenge:</strong> Keeping vote states synchronized between post cards and detail modal.</p>
+            
+            <h4>Solution: Enhanced Vote Result Passing</h4>
+            <pre>
+// Modal passes vote result directly to parent
+const handleVoteInModal = async () => {
+  const result = await voteOnPost(post.id);
+  
+  if (onPostUpdated) {
+    onPostUpdated(
+      { ...post, voteCount: result.newVoteCount },
+      result  // Direct vote result prevents race conditions
+    );
+  }
+};
+
+// Parent component receives and applies vote result
+const handlePostUpdated = async (
+  updatedPost: Post, 
+  voteResult?: { hasVoted: boolean; newVoteCount: number }
+) => {
+  // Update post data
+  setPosts(prevPosts => 
+    prevPosts.map(post => 
+      post.id === updatedPost.id ? { ...post, ...updatedPost } : post
+    )
+  );
+  
+  // Use direct vote result (most reliable)
+  if (user && voteResult) {
+    setUserVotes(prev => ({
+      ...prev,
+      [updatedPost.id]: voteResult.hasVoted
+    }));
+  }
+};
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-image"></i> Image Upload Integration</h3>
+            
+            <p>Community posts support image uploads through ImgBB API:</p>
+            
+            <pre>
+// ImgBB integration for community images
+const uploadPostImage = async (file: File): Promise<string> => {
+  const formData = new FormData();
+  formData.append('image', file);
+  
+  const response = await fetch(
+    `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,
+    { method: 'POST', body: formData }
+  );
+  
+  const data = await response.json();
+  return data.data.display_url;
+};
+            </pre>
+            
+            <ul class="feature-list">
+                <li><strong>32MB Size Limit</strong> - Generous file size for high-quality images</li>
+                <li><strong>Multiple Formats</strong> - Supports JPG, PNG, GIF, WebP</li>
+                <li><strong>CDN Hosting</strong> - Global content delivery for fast loading</li>
+                <li><strong>Automatic Optimization</strong> - ImgBB optimizes images automatically</li>
+                <li><strong>Unique Naming</strong> - Images named with postId for organization</li>
+            </ul>
+        </section>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

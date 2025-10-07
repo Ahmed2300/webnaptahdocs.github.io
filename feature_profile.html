@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Napta (نبتة) | User Profiles</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="sidebar">
+        <h1><i class="fas fa-leaf"></i> Napta Web</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="nav-link"><i class="fas fa-fw fa-home"></i> Home</a></li>
+                <li><a href="overview.html" class="nav-link"><i class="fas fa-fw fa-info-circle"></i> Overview</a></li>
+                <li><a href="architecture.html" class="nav-link"><i class="fas fa-fw fa-sitemap"></i> Architecture</a></li>
+                <li><a href="tech_stack.html" class="nav-link"><i class="fas fa-fw fa-cogs"></i> Tech Stack</a></li>
+                <li>
+                    <a href="#" class="nav-link"><i class="fas fa-fw fa-star"></i> Core Features</a>
+                    <ul class="sub-menu">
+                        <li><a href="feature_ai_diagnosis.html" class="nav-link"><i class="fas fa-fw fa-brain"></i> AI Plant Diagnosis</a></li>
+                        <li><a href="feature_community.html" class="nav-link"><i class="fas fa-fw fa-users"></i> Community Platform</a></li>
+                        <li><a href="feature_marketplace.html" class="nav-link"><i class="fas fa-fw fa-shopping-cart"></i> Marketplace</a></li>
+                        <li><a href="feature_profile.html" class="nav-link active"><i class="fas fa-fw fa-user-circle"></i> User Profiles</a></li>
+                    </ul>
+                </li>
+                <li><a href="ui_design.html" class="nav-link"><i class="fas fa-fw fa-palette"></i> UI/UX Design</a></li>
+                <li><a href="api_integration.html" class="nav-link"><i class="fas fa-fw fa-plug"></i> API Integration</a></li>
+                <li><a href="deployment.html" class="nav-link"><i class="fas fa-fw fa-rocket"></i> Deployment</a></li>
+                <li><a href="team.html" class="nav-link"><i class="fas fa-fw fa-people-group"></i> Team</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h2>User Profiles & Statistics</h2>
+            <p>Comprehensive Profile Management with Real-Time Sync</p>
+        </header>
+
+        <section>
+            <h3><i class="fas fa-user-circle"></i> Profile System Overview</h3>
+            <p>
+                User profiles in Napta are powered by Firebase Realtime Database with cross-environment synchronization. 
+                Profiles include comprehensive statistics, achievement tracking, social links, and customizable cover photos. 
+                The system automatically migrates existing users and ensures data consistency across all profile sections.
+            </p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-sync"></i>
+                    <h4>Real-Time</h4>
+                    <p>Sync</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-chart-bar"></i>
+                    <h4>Statistics</h4>
+                    <p>Tracking</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-image"></i>
+                    <h4>ImgBB</h4>
+                    <p>Image Upload</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-award"></i>
+                    <h4>Achievements</h4>
+                    <p>System</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-database"></i> Profile Data Structure</h3>
+            
+            <pre>
+interface UserProfile {
+  uid: string;
+  displayName: string;
+  email: string;
+  photoURL: string;
+  coverPhotoURL?: string;
+  bio?: string;
+  location?: string;
+  profession?: string;
+  experience?: string;
+  
+  // Statistics
+  stats: {
+    scansCompleted: number;
+    postsCreated: number;
+    reputation: number;
+  };
+  
+  // Legacy fields (maintained for backward compatibility)
+  reputation: number;
+  postCount: number;
+  commentCount: number;
+  
+  // Social links
+  socialLinks?: {
+    linkedin?: string;
+    twitter?: string;
+    website?: string;
+  };
+  
+  // Achievement badges
+  badges: {
+    firstPost?: boolean;
+    problemSolver?: boolean;
+    plantExpert?: boolean;
+    communityLeader?: boolean;
+    scanMaster?: boolean;
+  };
+  
+  // Metadata
+  createdAt: number;
+  lastModified: number;
+}
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-sync-alt"></i> Real-Time Profile Synchronization</h3>
+            
+            <p><strong>Challenge:</strong> Profile image updates on localhost weren't reflecting in deployed app.</p>
+            
+            <h4>Solution: Real-Time Listener System</h4>
+            <pre>
+// Setup real-time profile listener in AuthContext
+const setupProfileListener = (uid: string) => {
+  const userRef = ref(database, `users/${uid}`);
+  
+  const unsubscribe = onValue(userRef, (snapshot) => {
+    const profile = snapshot.val();
+    if (profile) {
+      console.log('📡 Real-time profile update received');
+      setUserProfile(profile);
+    }
+  });
+  
+  setProfileListener(() => unsubscribe);
+  return unsubscribe;
+};
+
+// Enhanced profile update with verification
+const updateUserProfile = async (updates: Partial<UserProfile>) => {
+  const userRef = ref(database, `users/${user.uid}`);
+  await update(userRef, {
+    ...updates,
+    lastModified: Date.now()
+  });
+  
+  // Force fresh read with delay for Firebase sync
+  await new Promise(resolve => setTimeout(resolve, 500));
+  
+  // Verify update was saved
+  const verifySnapshot = await get(userRef);
+  const savedData = verifySnapshot.val();
+  
+  if (savedData) {
+    setUserProfile(savedData);
+    setupProfileListener(user.uid);
+  }
+};
+            </pre>
+            
+            <ul class="feature-list">
+                <li><strong>Instant Updates</strong> - Profile changes sync immediately across all environments</li>
+                <li><strong>Cross-Device Sync</strong> - Updates reflect on localhost, deployed app, and mobile</li>
+                <li><strong>Multi-Tab Support</strong> - All open tabs update automatically</li>
+                <li><strong>Verification System</strong> - Updates verified by reading back from Firebase</li>
+                <li><strong>Proper Cleanup</strong> - Listeners properly removed on sign out</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-image"></i> Profile Image Management</h3>
+            
+            <h4>ImgBB Integration for Profile Photos</h4>
+            <pre>
+// Upload profile image to ImgBB
+const uploadProfileImage = async (file: File): Promise<string> => {
+  const formData = new FormData();
+  formData.append('image', file);
+  formData.append('key', IMGBB_API_KEY);
+  
+  const response = await fetch('https://api.imgbb.com/1/upload', {
+    method: 'POST',
+    body: formData
+  });
+  
+  const data = await response.json();
+  
+  if (data.success) {
+    return data.data.display_url;
+  }
+  
+  throw new Error('Image upload failed');
+};
+            </pre>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-crop"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Image Cropping</h4>
+                        <p>Built-in cropper for perfect profile pictures with preview and zoom controls.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Cover Photos</h4>
+                        <p>Custom cover photos with gradient fallbacks for personalized profiles.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Instant Preview</h4>
+                        <p>Real-time preview of cropped images before upload and save.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>CDN Hosting</h4>
+                        <p>Images hosted on ImgBB CDN for fast loading worldwide.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-chart-line"></i> Statistics Tracking</h3>
+            
+            <h4>Automatic Stats Migration</h4>
+            <p>The system automatically migrates existing users to the new stats structure:</p>
+            
+            <pre>
+// Initialize user stats (called automatically on login)
+export const initializeUserStats = async (uid: string): Promise<void> => {
+  const userRef = ref(database, `users/${uid}`);
+  const snapshot = await get(userRef);
+  
+  if (snapshot.exists()) {
+    const profile = snapshot.val();
+    
+    // Check if user has stats field
+    if (!profile.stats) {
+      console.log('Initializing stats for existing user:', uid);
+      
+      await update(userRef, {
+        stats: {
+          scansCompleted: 0,
+          postsCreated: 0,
+          reputation: profile.reputation || 0
+        },
+        lastModified: Date.now()
+      });
+    }
+  }
+};
+            </pre>
+            
+            <h4>Statistics Updates</h4>
+            <div class="highlights-grid">
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <div>
+                        <h4>Scan Tracking</h4>
+                        <p>Each diagnosis increments scansCompleted and adds +1 reputation</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div>
+                        <h4>Post Tracking</h4>
+                        <p>Community posts increment postsCreated counter automatically</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div>
+                        <h4>Reputation System</h4>
+                        <p>Earn points from scans, helpful posts, and community votes</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-level-up-alt"></i>
+                    </div>
+                    <div>
+                        <h4>User Levels</h4>
+                        <p>Automatic level calculation based on total engagement points</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-cog"></i> Profile Settings</h3>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-edit"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Personal Information</h4>
+                        <p>Edit name, bio, location, profession, and experience level.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Social Links</h4>
+                        <p>Connect LinkedIn, Twitter, and personal website profiles.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Notifications</h4>
+                        <p>Configure email notifications for votes, comments, and mentions.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Privacy</h4>
+                        <p>Control profile visibility, activity display, and data sharing.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-credit-card"></i> Subscription Management</h3>
+            
+            <h4>Automatic Free Plan Creation</h4>
+            <p>The system automatically creates subscription records for all users, including Free Plan users:</p>
+            
+            <pre>
+// Auto-create Free Plan subscription
+async getUserSubscription(userId: string): Promise<UserSubscription | null> {
+  const subscriptionRef = ref(database, `subscriptions/${userId}`);
+  const snapshot = await get(subscriptionRef);
+  
+  if (snapshot.exists()) {
+    return snapshot.val();
+  } else {
+    // Create default Free Plan for new users
+    const defaultSubscription: UserSubscription = {
+      planId: 'free',
+      status: 'active',
+      startDate: new Date().toISOString(),
+      endDate: new Date(Date.now() + 10 * 365 * 24 * 60 * 60 * 1000).toISOString(),
+      autoRenew: true,
+      scansUsed: 0,
+      scanLimit: 10
+    };
+    
+    await set(subscriptionRef, defaultSubscription);
+    return defaultSubscription;
+  }
+}
+            </pre>
+            
+            <h4>Subscription Plans</h4>
+            <div class="highlights-grid">
+                <div class="highlight-item">
+                    <div class="highlight-icon" style="color: #6b7280;">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <div>
+                        <h4>Free Plan</h4>
+                        <p>10 scans/month, community access, basic features - ج.م 0/month</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon" style="color: #10b981;">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div>
+                        <h4>Premium Plan</h4>
+                        <p>50 scans/month, marketplace access, priority support - ج.م 99/month</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon" style="color: #8b5cf6;">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <div>
+                        <h4>Professional Plan</h4>
+                        <p>Unlimited scans, seller tools, analytics dashboard - ج.م 199/month</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-history"></i> Activity History</h3>
+            
+            <ul class="feature-list">
+                <li><strong>Scan History</strong> - View all plant diagnoses with images and results</li>
+                <li><strong>Post History</strong> - Track community posts, votes, and comments</li>
+                <li><strong>Order History</strong> - Review marketplace purchases and deliveries</li>
+                <li><strong>Activity Timeline</strong> - Chronological view of all platform actions</li>
+                <li><strong>Export Data</strong> - Download complete activity history as JSON</li>
+                <li><strong>Delete History</strong> - Clear specific items or all history data</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-medal"></i> Achievement System</h3>
+            
+            <p>Dynamic badge system that rewards user engagement:</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-pen" style="color: #10b981;"></i>
+                    <h4>First Post</h4>
+                    <p>Created first post</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-lightbulb" style="color: #f59e0b;"></i>
+                    <h4>Problem Solver</h4>
+                    <p>10+ vote answer</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-leaf" style="color: #059669;"></i>
+                    <h4>Plant Expert</h4>
+                    <p>50+ scans & posts</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-users" style="color: #3b82f6;"></i>
+                    <h4>Community Leader</h4>
+                    <p>100+ reputation</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

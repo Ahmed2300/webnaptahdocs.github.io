@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Napta (نبتة) | UI/UX Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="sidebar">
+        <h1><i class="fas fa-leaf"></i> Napta Web</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="nav-link"><i class="fas fa-fw fa-home"></i> Home</a></li>
+                <li><a href="overview.html" class="nav-link"><i class="fas fa-fw fa-info-circle"></i> Overview</a></li>
+                <li><a href="architecture.html" class="nav-link"><i class="fas fa-fw fa-sitemap"></i> Architecture</a></li>
+                <li><a href="tech_stack.html" class="nav-link"><i class="fas fa-fw fa-cogs"></i> Tech Stack</a></li>
+                <li>
+                    <a href="#" class="nav-link"><i class="fas fa-fw fa-star"></i> Core Features</a>
+                    <ul class="sub-menu">
+                        <li><a href="feature_ai_diagnosis.html" class="nav-link"><i class="fas fa-fw fa-brain"></i> AI Plant Diagnosis</a></li>
+                        <li><a href="feature_community.html" class="nav-link"><i class="fas fa-fw fa-users"></i> Community Platform</a></li>
+                        <li><a href="feature_marketplace.html" class="nav-link"><i class="fas fa-fw fa-shopping-cart"></i> Marketplace</a></li>
+                        <li><a href="feature_profile.html" class="nav-link"><i class="fas fa-fw fa-user-circle"></i> User Profiles</a></li>
+                    </ul>
+                </li>
+                <li><a href="ui_design.html" class="nav-link active"><i class="fas fa-fw fa-palette"></i> UI/UX Design</a></li>
+                <li><a href="api_integration.html" class="nav-link"><i class="fas fa-fw fa-plug"></i> API Integration</a></li>
+                <li><a href="deployment.html" class="nav-link"><i class="fas fa-fw fa-rocket"></i> Deployment</a></li>
+                <li><a href="team.html" class="nav-link"><i class="fas fa-fw fa-people-group"></i> Team</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h2>UI/UX Design System</h2>
+            <p>Modern, Accessible, and Plant-Themed Interface</p>
+        </header>
+
+        <section>
+            <h3><i class="fas fa-palette"></i> Design Philosophy</h3>
+            <p>
+                Napta's design system is built on principles of clarity, accessibility, and natural aesthetics. 
+                The plant-themed color palette creates an organic feel while maintaining professional functionality. 
+                Every component is designed with user experience in mind, from the intuitive navigation to the 
+                satisfying micro-interactions.
+            </p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-desktop"></i>
+                    <h4>Desktop-First</h4>
+                    <p>Optimized Layout</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h4>Fully Responsive</h4>
+                    <p>All Devices</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-universal-access"></i>
+                    <h4>WCAG 2.1</h4>
+                    <p>AA Compliant</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-leaf"></i>
+                    <h4>Plant Theme</h4>
+                    <p>Natural Colors</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-paint-brush"></i> Color Palette</h3>
+            
+            <h4>Primary Colors</h4>
+            <div class="tech-grid">
+                <div class="tech-card" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white;">
+                    <h4 style="color: white;">Emerald</h4>
+                    <p style="color: rgba(255,255,255,0.9);">#10b981</p>
+                </div>
+                <div class="tech-card" style="background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%); color: white;">
+                    <h4 style="color: white;">Teal</h4>
+                    <p style="color: rgba(255,255,255,0.9);">#14b8a6</p>
+                </div>
+                <div class="tech-card" style="background: linear-gradient(135deg, #1f2937 0%, #111827 100%); color: white;">
+                    <h4 style="color: white;">Slate</h4>
+                    <p style="color: rgba(255,255,255,0.9);">#1f2937</p>
+                </div>
+                <div class="tech-card" style="background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);">
+                    <h4>Gray</h4>
+                    <p>#f9fafb</p>
+                </div>
+            </div>
+            
+            <h4>Semantic Colors</h4>
+            <div class="highlights-grid">
+                <div class="highlight-item">
+                    <div class="highlight-icon" style="color: #10b981;">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div>
+                        <h4>Success - #10b981</h4>
+                        <p>Used for positive actions, confirmations, and healthy plant indicators</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon" style="color: #f59e0b;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div>
+                        <h4>Warning - #f59e0b</h4>
+                        <p>Moderate disease severity, caution messages, and pending states</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon" style="color: #ef4444;">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div>
+                        <h4>Error - #ef4444</h4>
+                        <p>Critical issues, severe diseases, and error messages</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon" style="color: #3b82f6;">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div>
+                        <h4>Info - #3b82f6</h4>
+                        <p>Informational messages, tips, and educational content</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-font"></i> Typography</h3>
+            
+            <pre>
+/* Font Families */
+--font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+--font-heading: 'Poppins', sans-serif;
+--font-arabic: 'Noto Sans Arabic', 'Cairo', sans-serif;
+
+/* Font Sizes */
+--text-xs: 0.75rem;    /* 12px */
+--text-sm: 0.875rem;   /* 14px */
+--text-base: 1rem;     /* 16px */
+--text-lg: 1.125rem;   /* 18px */
+--text-xl: 1.25rem;    /* 20px */
+--text-2xl: 1.5rem;    /* 24px */
+--text-3xl: 1.875rem;  /* 30px */
+--text-4xl: 2.25rem;   /* 36px */
+
+/* Font Weights */
+--font-normal: 400;
+--font-medium: 500;
+--font-semibold: 600;
+--font-bold: 700;
+
+/* Line Heights */
+--leading-tight: 1.25;
+--leading-normal: 1.5;
+--leading-relaxed: 1.75;
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-layer-group"></i> Component Design</h3>
+            
+            <h4>Desktop Header Navigation</h4>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Persistent Navigation</h4>
+                        <p>Fixed top navigation with logo, main menu items, and user profile dropdown.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Language Switcher</h4>
+                        <p>Toggle between English and Arabic with RTL layout support.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <h4>Two-Column Scan Interface</h4>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-arrow-left"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Left Column - Action Panel</h4>
+                        <p>Prominent upload area with drag-and-drop, file selection, and camera capture.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Right Column - Info Panel</h4>
+                        <p>Statistics, benefits, how it works, and engaging visual elements.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-mobile-alt"></i> Responsive Design</h3>
+            
+            <h4>Breakpoint System</h4>
+            <pre>
+/* Tailwind CSS Breakpoints */
+sm:  640px   /* Small devices (landscape phones) */
+md:  768px   /* Medium devices (tablets) */
+lg:  1024px  /* Large devices (desktops) */
+xl:  1280px  /* Extra large devices (large desktops) */
+2xl: 1536px  /* 2X large devices (larger desktops) */
+
+/* Mobile-First Approach */
+.container {
+  width: 100%;           /* Mobile default */
+  padding: 1rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 2rem;       /* Tablet and up */
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;   /* Desktop */
+    margin: 0 auto;
+  }
+}
+            </pre>
+            
+            <ul class="feature-list">
+                <li><strong>Mobile (< 768px)</strong> - Single column, bottom navigation, touch-optimized buttons</li>
+                <li><strong>Tablet (768px - 1024px)</strong> - Adapted two-column, hybrid navigation</li>
+                <li><strong>Desktop (> 1024px)</strong> - Full two-column layout, persistent top navigation</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-magic"></i> Animations & Interactions</h3>
+            
+            <div class="highlights-grid">
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-mouse-pointer"></i>
+                    </div>
+                    <div>
+                        <h4>Hover Effects</h4>
+                        <p>Smooth scale, color, and shadow transitions on interactive elements</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-spinner"></i>
+                    </div>
+                    <div>
+                        <h4>Loading States</h4>
+                        <p>Branded loading animations with plant growth theme and progress steps</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div>
+                        <h4>Success Feedback</h4>
+                        <p>Checkmark animations, toast notifications, and positive reinforcement</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div>
+                        <h4>Plant Animations</h4>
+                        <p>Floating leaves, growing plants, and natural motion for organic feel</p>
+                    </div>
+                </div>
+            </ul>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-universal-access"></i> Accessibility Features</h3>
+            
+            <ul class="feature-list">
+                <li><strong>Semantic HTML</strong> - Proper heading hierarchy, landmarks, and ARIA labels</li>
+                <li><strong>Keyboard Navigation</strong> - All interactive elements accessible via keyboard</li>
+                <li><strong>Color Contrast</strong> - WCAG 2.1 AA compliant contrast ratios (4.5:1 minimum)</li>
+                <li><strong>Focus Indicators</strong> - Clear visual focus states for navigation</li>
+                <li><strong>Screen Reader Support</strong> - Descriptive alt text and ARIA attributes</li>
+                <li><strong>Text Scaling</strong> - Content readable at 200% zoom level</li>
+                <li><strong>Error Messages</strong> - Clear, actionable error descriptions</li>
+                <li><strong>Touch Targets</strong> - Minimum 44x44px touch areas on mobile</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-icons"></i> Icon System</h3>
+            
+            <p>Napta uses <strong>Lucide React</strong> for consistent, beautiful iconography:</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-leaf"></i>
+                    <h4>1000+</h4>
+                    <p>Icons Available</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-vector-square"></i>
+                    <h4>SVG</h4>
+                    <p>Vector Format</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-weight"></i>
+                    <h4>Lightweight</h4>
+                    <p>Tree-Shakeable</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-paint-brush"></i>
+                    <h4>Customizable</h4>
+                    <p>Colors & Sizes</p>
+                </div>
+            </div>
+            
+            <pre>
+// Icon usage example
+import { Leaf, Camera, Users, ShoppingBag } from 'lucide-react';
+
+<Leaf className="w-6 h-6 text-emerald-600" />
+<Camera className="w-5 h-5 text-slate-700" />
+<Users className="w-8 h-8 text-teal-500" />
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-sparkles"></i> Micro-Interactions</h3>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Vote Animation</h4>
+                        <p>Heart fills with color and scales up when voting on community posts.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Upload Feedback</h4>
+                        <p>Drag-and-drop zone highlights with border color change and scale effect.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Notification Toast</h4>
+                        <p>Slide-in notifications with auto-dismiss and manual close option.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Search Expansion</h4>
+                        <p>Search input expands smoothly on focus with icon animation.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-image"></i> Visual Design Elements</h3>
+            
+            <ul class="feature-list">
+                <li><strong>Gradient Backgrounds</strong> - Emerald to teal gradients for headers and CTAs</li>
+                <li><strong>Soft Shadows</strong> - Layered shadows for depth and elevation hierarchy</li>
+                <li><strong>Rounded Corners</strong> - 8-12px border radius for modern, friendly feel</li>
+                <li><strong>Card Design</strong> - White cards with shadows on light gray backgrounds</li>
+                <li><strong>Glassmorphism</strong> - Semi-transparent overlays with backdrop blur</li>
+                <li><strong>Status Indicators</strong> - Colored dots and badges for states</li>
+                <li><strong>Progress Bars</strong> - Animated gradients showing completion</li>
+                <li><strong>Empty States</strong> - Illustrated placeholders with helpful messaging</li>
+            </ul>
+        </section>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

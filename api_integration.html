@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Napta (نبتة) | API Integration</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="sidebar">
+        <h1><i class="fas fa-leaf"></i> Napta Web</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="nav-link"><i class="fas fa-fw fa-home"></i> Home</a></li>
+                <li><a href="overview.html" class="nav-link"><i class="fas fa-fw fa-info-circle"></i> Overview</a></li>
+                <li><a href="architecture.html" class="nav-link"><i class="fas fa-fw fa-sitemap"></i> Architecture</a></li>
+                <li><a href="tech_stack.html" class="nav-link"><i class="fas fa-fw fa-cogs"></i> Tech Stack</a></li>
+                <li>
+                    <a href="#" class="nav-link"><i class="fas fa-fw fa-star"></i> Core Features</a>
+                    <ul class="sub-menu">
+                        <li><a href="feature_ai_diagnosis.html" class="nav-link"><i class="fas fa-fw fa-brain"></i> AI Plant Diagnosis</a></li>
+                        <li><a href="feature_community.html" class="nav-link"><i class="fas fa-fw fa-users"></i> Community Platform</a></li>
+                        <li><a href="feature_marketplace.html" class="nav-link"><i class="fas fa-fw fa-shopping-cart"></i> Marketplace</a></li>
+                        <li><a href="feature_profile.html" class="nav-link"><i class="fas fa-fw fa-user-circle"></i> User Profiles</a></li>
+                    </ul>
+                </li>
+                <li><a href="ui_design.html" class="nav-link"><i class="fas fa-fw fa-palette"></i> UI/UX Design</a></li>
+                <li><a href="api_integration.html" class="nav-link active"><i class="fas fa-fw fa-plug"></i> API Integration</a></li>
+                <li><a href="deployment.html" class="nav-link"><i class="fas fa-fw fa-rocket"></i> Deployment</a></li>
+                <li><a href="team.html" class="nav-link"><i class="fas fa-fw fa-people-group"></i> Team</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h2>API Integration</h2>
+            <p>External Services and Third-Party APIs</p>
+        </header>
+
+        <section>
+            <h3><i class="fas fa-plug"></i> External Services Overview</h3>
+            <p>
+                Napta integrates with multiple external APIs to provide comprehensive functionality. From AI-powered 
+                plant diagnosis using Google Gemini to image hosting with ImgBB and authentication via Firebase, 
+                each integration is carefully implemented with error handling, rate limiting, and fallback strategies.
+            </p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-brain"></i>
+                    <h4>Google Gemini</h4>
+                    <p>AI Analysis</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-fire"></i>
+                    <h4>Firebase</h4>
+                    <p>Backend Services</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-image"></i>
+                    <h4>ImgBB</h4>
+                    <p>Image Hosting</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fab fa-paypal"></i>
+                    <h4>PayPal</h4>
+                    <p>Payments</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-robot"></i> Google Gemini AI Integration</h3>
+            
+            <h4>Configuration</h4>
+            <pre>
+import { GoogleGenerativeAI } from '@google/generative-ai';
+
+// 7 API keys for load balancing and reliability
+const GEMINI_API_KEYS = [
+  'AIzaSyCZzGJDZrgUlTEj3iRGmjxCT0Q7TBHmYSM',
+  'AIzaSyBCRnp2S6NJiH0r3FZlwwp1t5iGJoAy8yA',
+  'AIzaSyBdGE1S7SLo0UcMh5DH7q6sR3PavxZ2KpE',
+  'AIzaSyBIhMXLnqLgJrKlwxYWvH4eHOPPuW8-hck',
+  'AIzaSyC7iP6J8mRZbUx8n5QW2Jk9YNmP3XsT1wQ',
+  'AIzaSyDXkZ5yN8rYvP4Qm7bS2cT9xH6jK1wL4eM',
+  'AIzaSyEW9mK3nV6pR7sT2dY8hJ4zB1qN5xC0oF'
+];
+
+let currentKeyIndex = 0;
+
+// Initialize with current key
+const genAI = new GoogleGenerativeAI(GEMINI_API_KEYS[currentKeyIndex]);
+const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
+            </pre>
+            
+            <h4>API Request Flow</h4>
+            <pre>
+export const analyzePlantImage = async (
+  imageData: string,
+  language: 'en' | 'ar' = 'en'
+): Promise<DiagnosisResult> => {
+  try {
+    // 1. Prepare image data
+    const base64Image = imageData.replace(/^data:image\/\w+;base64,/, '');
+    
+    // 2. Create structured prompt
+    const prompt = createAnalysisPrompt(language);
+    
+    // 3. Send request to Gemini
+    const result = await model.generateContent([
+      prompt,
+      {
+        inlineData: {
+          data: base64Image,
+          mimeType: 'image/jpeg'
+        }
+      }
+    ]);
+    
+    // 4. Parse and validate response
+    const response = await result.response;
+    const text = response.text();
+    const parsed = JSON.parse(text);
+    
+    // 5. Return structured diagnosis
+    return validateDiagnosisResult(parsed);
+    
+  } catch (error) {
+    if (error.message.includes('quota') || error.message.includes('429')) {
+      // Rotate to next API key
+      currentKeyIndex = (currentKeyIndex + 1) % GEMINI_API_KEYS.length;
+      console.log(`Rotated to API key ${currentKeyIndex + 1}`);
+      return analyzePlantImage(imageData, language); // Retry
+    }
+    throw error;
+  }
+};
+            </pre>
+            
+            <ul class="feature-list">
+                <li><strong>Model</strong> - gemini-pro-vision for image analysis</li>
+                <li><strong>Load Balancing</strong> - 7 API keys with automatic rotation</li>
+                <li><strong>Rate Limiting</strong> - Handles quota errors gracefully</li>
+                <li><strong>Retry Logic</strong> - Automatic retry with exponential backoff</li>
+                <li><strong>Multi-language</strong> - English and Arabic prompts</li>
+                <li><strong>Structured Output</strong> - JSON format for consistent parsing</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-fire"></i> Firebase Integration</h3>
+            
+            <h4>Firebase Services Used</h4>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Authentication</h4>
+                        <p>Google OAuth2 sign-in, session management, and user state tracking.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Realtime Database</h4>
+                        <p>NoSQL database with real-time sync for community and profiles.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <h4>Firebase Configuration</h4>
+            <pre>
+import { initializeApp } from 'firebase/app';
+import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import { getDatabase } from 'firebase/database';
+
+const firebaseConfig = {
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL
+};
+
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const database = getDatabase(app);
+export const googleProvider = new GoogleAuthProvider();
+            </pre>
+            
+            <h4>Real-Time Listeners</h4>
+            <pre>
+import { ref, onValue, off } from 'firebase/database';
+
+// Setup real-time listener for posts
+const postsRef = ref(database, 'posts');
+
+const unsubscribe = onValue(postsRef, (snapshot) => {
+  const data = snapshot.val();
+  if (data) {
+    const postsArray = Object.values(data);
+    setPosts(postsArray);
+  }
+});
+
+// Cleanup on component unmount
+return () => unsubscribe();
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-image"></i> ImgBB Image Hosting</h3>
+            
+            <h4>API Configuration</h4>
+            <pre>
+const IMGBB_API_KEY = '4b69ea9c24dcfbfab5b8d4dc3784b006';
+const IMGBB_UPLOAD_URL = 'https://api.imgbb.com/1/upload';
+
+export const uploadImage = async (file: File): Promise<string> => {
+  const formData = new FormData();
+  formData.append('image', file);
+  formData.append('key', IMGBB_API_KEY);
+  
+  try {
+    const response = await fetch(IMGBB_UPLOAD_URL, {
+      method: 'POST',
+      body: formData
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Upload failed: ${response.statusText}`);
+    }
+    
+    const data = await response.json();
+    
+    if (data.success) {
+      return data.data.display_url;
+    }
+    
+    throw new Error('Image upload failed');
+  } catch (error) {
+    console.error('ImgBB upload error:', error);
+    throw error;
+  }
+};
+            </pre>
+            
+            <div class="highlights-grid">
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-file-upload"></i>
+                    </div>
+                    <div>
+                        <h4>File Size Limit</h4>
+                        <p>Maximum 32MB per image upload</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-images"></i>
+                    </div>
+                    <div>
+                        <h4>Format Support</h4>
+                        <p>JPG, PNG, GIF, BMP, WebP, TIFF</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div>
+                        <h4>CDN Delivery</h4>
+                        <p>Fast global content delivery network</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-compress"></i>
+                    </div>
+                    <div>
+                        <h4>Auto Optimization</h4>
+                        <p>Automatic image compression and variants</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3><i class="fab fa-paypal"></i> PayPal Integration</h3>
+            
+            <h4>Subscription Management</h4>
+            <pre>
+// PayPal subscription plans
+export const SUBSCRIPTION_PLANS = {
+  free: {
+    id: 'free',
+    name: 'Free Plan',
+    price: 0,
+    currency: 'EGP',
+    scanLimit: 10,
+    features: [
+      '10 scans per month',
+      'Community access',
+      'Basic features'
+    ]
+  },
+  premium: {
+    id: 'P-PREMIUM-PLAN-ID',
+    name: 'Premium Plan',
+    price: 99,
+    currency: 'EGP',
+    scanLimit: 50,
+    features: [
+      '50 scans per month',
+      'Marketplace access',
+      'Priority support'
+    ]
+  },
+  professional: {
+    id: 'P-PROFESSIONAL-PLAN-ID',
+    name: 'Professional Plan',
+    price: 199,
+    currency: 'EGP',
+    scanLimit: -1, // Unlimited
+    features: [
+      'Unlimited scans',
+      'Seller tools',
+      'Analytics dashboard'
+    ]
+  }
+};
+
+// Create subscription
+export const createSubscription = async (planId: string) => {
+  // PayPal SDK integration
+  const paypal = await loadPayPalSDK();
+  
+  return paypal.Buttons({
+    createSubscription: (data, actions) => {
+      return actions.subscription.create({
+        plan_id: planId
+      });
+    },
+    onApprove: async (data) => {
+      // Store subscription in Firebase
+      await saveSubscription(data.subscriptionID);
+    }
+  });
+};
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-exclamation-triangle"></i> Error Handling</h3>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-redo"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Retry Logic</h4>
+                        <p>Exponential backoff for transient failures with maximum retry attempts.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Fallback Strategies</h4>
+                        <p>Graceful degradation when services are unavailable.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>User Notifications</h4>
+                        <p>Clear error messages with actionable suggestions.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Error Logging</h4>
+                        <p>Comprehensive logging for debugging and monitoring.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-tachometer-alt"></i> Rate Limiting & Quotas</h3>
+            
+            <ul class="feature-list">
+                <li><strong>Gemini API</strong> - 60 requests per minute per key, automatic rotation on quota</li>
+                <li><strong>ImgBB</strong> - No explicit rate limit, monitor usage</li>
+                <li><strong>Firebase Realtime DB</strong> - 100k concurrent connections, optimize listeners</li>
+                <li><strong>Firebase Auth</strong> - Rate limits per IP, handle gracefully</li>
+                <li><strong>Guest Scans</strong> - 5 scans per browser session via localStorage</li>
+                <li><strong>User Scans</strong> - Based on subscription plan (10-unlimited)</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-lock"></i> API Security</h3>
+            
+            <div class="highlights-grid">
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <div>
+                        <h4>Environment Variables</h4>
+                        <p>All API keys stored in environment variables, never committed to Git</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div>
+                        <h4>Request Validation</h4>
+                        <p>Input sanitization and validation before API calls</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div>
+                        <h4>Timeout Handling</h4>
+                        <p>60-second timeouts prevent hanging requests</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div>
+                        <h4>Authentication</h4>
+                        <p>Firebase Auth tokens for secure API access</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Napta (نبتة) | Marketplace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="sidebar">
+        <h1><i class="fas fa-leaf"></i> Napta Web</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="nav-link"><i class="fas fa-fw fa-home"></i> Home</a></li>
+                <li><a href="overview.html" class="nav-link"><i class="fas fa-fw fa-info-circle"></i> Overview</a></li>
+                <li><a href="architecture.html" class="nav-link"><i class="fas fa-fw fa-sitemap"></i> Architecture</a></li>
+                <li><a href="tech_stack.html" class="nav-link"><i class="fas fa-fw fa-cogs"></i> Tech Stack</a></li>
+                <li>
+                    <a href="#" class="nav-link"><i class="fas fa-fw fa-star"></i> Core Features</a>
+                    <ul class="sub-menu">
+                        <li><a href="feature_ai_diagnosis.html" class="nav-link"><i class="fas fa-fw fa-brain"></i> AI Plant Diagnosis</a></li>
+                        <li><a href="feature_community.html" class="nav-link"><i class="fas fa-fw fa-users"></i> Community Platform</a></li>
+                        <li><a href="feature_marketplace.html" class="nav-link active"><i class="fas fa-fw fa-shopping-cart"></i> Marketplace</a></li>
+                        <li><a href="feature_profile.html" class="nav-link"><i class="fas fa-fw fa-user-circle"></i> User Profiles</a></li>
+                    </ul>
+                </li>
+                <li><a href="ui_design.html" class="nav-link"><i class="fas fa-fw fa-palette"></i> UI/UX Design</a></li>
+                <li><a href="api_integration.html" class="nav-link"><i class="fas fa-fw fa-plug"></i> API Integration</a></li>
+                <li><a href="deployment.html" class="nav-link"><i class="fas fa-fw fa-rocket"></i> Deployment</a></li>
+                <li><a href="team.html" class="nav-link"><i class="fas fa-fw fa-people-group"></i> Team</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h2>AI-Powered Marketplace</h2>
+            <p>Intelligent E-Commerce for Agricultural Products</p>
+        </header>
+
+        <section>
+            <h3><i class="fas fa-store"></i> Feature Overview</h3>
+            <p>
+                The marketplace seamlessly integrates AI-powered product recommendations with diagnosis results, connecting farmers 
+                with the exact products they need. Sellers can register, list products, and manage orders, while buyers enjoy 
+                personalized recommendations based on their plant diagnoses. The system uses Egyptian currency (EGP) and supports 
+                local shipping addresses across all governorates.
+            </p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-robot"></i>
+                    <h4>AI-Powered</h4>
+                    <p>Recommendations</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-store"></i>
+                    <h4>Multi-Vendor</h4>
+                    <p>Platform</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-money-bill"></i>
+                    <h4>EGP</h4>
+                    <p>Currency</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-truck"></i>
+                    <h4>Local</h4>
+                    <p>Shipping</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-user-tag"></i> Seller System</h3>
+            
+            <h4>Two-Tier Seller Model</h4>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Free Tier</h4>
+                        <p>Up to 5 products, basic listing features, standard commission rate, suitable for small vendors.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Khabeer Tier (Expert)</h4>
+                        <p>Unlimited products, featured listings, reduced commission, priority support, verified badge.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <h4>Seller Registration Process</h4>
+            <pre>
+// Multi-step seller registration
+interface SellerProfile {
+  uid: string;
+  businessName: string;
+  contactEmail: string;
+  phoneNumber: string;
+  businessAddress: {
+    street: string;
+    city: string;
+    governorate: string;
+    postalCode: string;
+  };
+  tier: 'free' | 'khabeer';
+  verified: boolean;
+  rating: number;
+  totalSales: number;
+  commission: number;
+  createdAt: number;
+  analytics: {
+    views: number;
+    orders: number;
+    revenue: number;
+  };
+}
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-boxes"></i> Product Management</h3>
+            
+            <ul class="feature-list">
+                <li><strong>Product Categories</strong> - Chemical treatments, organic solutions, seeds, tools, equipment</li>
+                <li><strong>Disease Relations</strong> - Products tagged with diseases they treat</li>
+                <li><strong>AI Embeddings</strong> - Semantic search capabilities for intelligent matching</li>
+                <li><strong>Image Gallery</strong> - Multiple product images with primary image selection</li>
+                <li><strong>Specifications</strong> - Detailed product information, usage instructions</li>
+                <li><strong>Inventory Management</strong> - Stock tracking, low inventory alerts</li>
+                <li><strong>Pricing</strong> - Flexible pricing in EGP with discount support</li>
+                <li><strong>Reviews & Ratings</strong> - Customer feedback system with verified purchases</li>
+            </ul>
+            
+            <h4>Product Schema</h4>
+            <pre>
+interface Product {
+  id: string;
+  sellerId: string;
+  name: string;
+  description: string;
+  category: 'chemical' | 'organic' | 'seeds' | 'tools' | 'equipment';
+  price: number;
+  currency: 'EGP';
+  stock: number;
+  images: string[];
+  diseaseRelations: string[];  // Links to diagnoses
+  specifications: {
+    activeIngredients?: string;
+    applicationMethod?: string;
+    coverage?: string;
+    safetyWarnings?: string;
+  };
+  rating: number;
+  reviewCount: number;
+  createdAt: number;
+  featured: boolean;
+}
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-brain"></i> AI-Powered Recommendations</h3>
+            
+            <p>The marketplace uses diagnosis results to provide contextual product recommendations:</p>
+            
+            <h4>Disease-to-Product Matching</h4>
+            <pre>
+// AI matches diagnosis to relevant products
+const getRecommendedProducts = async (diagnosis: DiagnosisResult) => {
+  const { diseaseName, severity, cropName } = diagnosis;
+  
+  // 1. Find products tagged with this disease
+  const diseaseProducts = await findProductsByDisease(diseaseName);
+  
+  // 2. Prioritize by severity
+  const products = severity === 'critical' 
+    ? diseaseProducts.filter(p => p.category === 'chemical')
+    : diseaseProducts;
+  
+  // 3. Apply AI ranking
+  const rankedProducts = await rankByRelevance(products, {
+    diseaseName,
+    cropName,
+    severity
+  });
+  
+  return rankedProducts.slice(0, 6);  // Top 6 recommendations
+};
+            </pre>
+            
+            <h4>AI Shopping Assistant</h4>
+            <p>Conversational AI chatbot that helps users find products:</p>
+            <pre>
+// Gemini-powered shopping assistant
+const shopAssistant = async (query: string, context: DiagnosisResult) => {
+  const prompt = `
+    You are a helpful agricultural shopping assistant.
+    User's plant: ${context.cropName}
+    Diagnosed issue: ${context.diseaseName}
+    Severity: ${context.severity}
+    
+    User question: ${query}
+    
+    Based on our product database, recommend relevant products and explain why.
+    Available products: ${JSON.stringify(products)}
+  `;
+  
+  return await gemini.generateContent(prompt);
+};
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-shopping-cart"></i> Shopping Experience</h3>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Smart Search</h4>
+                        <p>Semantic search with AI embeddings, category filters, price ranges, seller ratings.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cart-plus"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Shopping Cart</h4>
+                        <p>Real-time cart updates, quantity management, price calculations, coupon support.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Egyptian Shipping</h4>
+                        <p>All governorates supported, address validation, shipping cost calculation.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Cash on Delivery</h4>
+                        <p>Pay when you receive, no credit card needed, secure order tracking.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-map"></i> Egyptian Market Localization</h3>
+            
+            <h4>Governorate Support</h4>
+            <div class="highlights-grid">
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-city"></i>
+                    </div>
+                    <div>
+                        <h4>27 Governorates</h4>
+                        <p>Cairo, Giza, Alexandria, Dakahlia, Red Sea, Beheira, and all Egyptian regions</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div>
+                        <h4>EGP Currency</h4>
+                        <p>Egyptian Pound (ج.م) with proper formatting and pricing</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <div>
+                        <h4>Bilingual Support</h4>
+                        <p>English and Arabic interfaces for all marketplace features</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <div>
+                        <h4>Local Logistics</h4>
+                        <p>Integration with Egyptian shipping providers and delivery services</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-box"></i> Order Management</h3>
+            
+            <h4>Order Lifecycle</h4>
+            <div class="roadmap-timeline">
+                <div class="roadmap-item">
+                    <h4>1. Order Placement</h4>
+                    <p>Customer selects products, adds shipping address, places order with cash on delivery.</p>
+                </div>
+                
+                <div class="roadmap-item">
+                    <h4>2. Seller Notification</h4>
+                    <p>Seller receives order notification via Firebase, reviews order details and inventory.</p>
+                </div>
+                
+                <div class="roadmap-item">
+                    <h4>3. Order Confirmation</h4>
+                    <p>Seller confirms order, updates status to "Processing", prepares items for shipping.</p>
+                </div>
+                
+                <div class="roadmap-item">
+                    <h4>4. Shipping</h4>
+                    <p>Order marked as "Shipped", tracking information provided to customer.</p>
+                </div>
+                
+                <div class="roadmap-item">
+                    <h4>5. Delivery</h4>
+                    <p>Customer receives order, pays cash on delivery, confirms receipt.</p>
+                </div>
+                
+                <div class="roadmap-item">
+                    <h4>6. Review & Rating</h4>
+                    <p>Customer can leave review and rating, seller receives feedback.</p>
+                </div>
+            </div>
+            
+            <h4>Order Schema</h4>
+            <pre>
+interface Order {
+  id: string;
+  buyerId: string;
+  items: CartItem[];
+  totalAmount: number;
+  shippingAddress: {
+    fullName: string;
+    phoneNumber: string;
+    street: string;
+    city: string;
+    governorate: string;
+    postalCode?: string;
+  };
+  status: 'pending' | 'confirmed' | 'shipped' | 'delivered' | 'cancelled';
+  paymentMethod: 'cash_on_delivery';
+  createdAt: number;
+  deliveredAt?: number;
+}
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-shield-alt"></i> Access Restrictions</h3>
+            
+            <p><strong>Guest User Limitations:</strong></p>
+            <ul class="feature-list">
+                <li><strong>No Marketplace Access</strong> - Marketplace dropdown hidden from navigation</li>
+                <li><strong>No Product Recommendations</strong> - AI recommendations not shown in scan results</li>
+                <li><strong>Sign-In Encouragement</strong> - Beautiful cards prompting registration</li>
+                <li><strong>Clear Value Proposition</strong> - Shows benefits of signing up</li>
+            </ul>
+            
+            <p><strong>Authenticated User Benefits:</strong></p>
+            <ul class="feature-list">
+                <li><strong>Full Marketplace Access</strong> - Browse, search, and purchase products</li>
+                <li><strong>AI Recommendations</strong> - Contextual product suggestions after scans</li>
+                <li><strong>Shopping Cart</strong> - Persistent cart across sessions</li>
+                <li><strong>Order History</strong> - Track all purchases and deliveries</li>
+                <li><strong>Seller Registration</strong> - Become a marketplace vendor</li>
+                <li><strong>Reviews & Ratings</strong> - Leave feedback on products</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-chart-line"></i> Seller Analytics</h3>
+            
+            <p>Comprehensive dashboard for sellers to track performance:</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-eye"></i>
+                    <h4>Product Views</h4>
+                    <p>Track impressions</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-shopping-bag"></i>
+                    <h4>Total Orders</h4>
+                    <p>Order count</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-dollar-sign"></i>
+                    <h4>Revenue</h4>
+                    <p>Earnings in EGP</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-star"></i>
+                    <h4>Avg Rating</h4>
+                    <p>Customer feedback</p>
+                </div>
+            </div>
+            
+            <ul class="feature-list">
+                <li><strong>Sales Reports</strong> - Daily, weekly, and monthly revenue breakdowns</li>
+                <li><strong>Best Sellers</strong> - Top performing products by revenue and orders</li>
+                <li><strong>Customer Insights</strong> - Buyer demographics and preferences</li>
+                <li><strong>Inventory Alerts</strong> - Low stock notifications and recommendations</li>
+                <li><strong>Performance Metrics</strong> - Conversion rates, cart abandonment</li>
+            </ul>
+        </section>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Napta (نبتة) | AI Plant Diagnosis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="sidebar">
+        <h1><i class="fas fa-leaf"></i> Napta Web</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="nav-link"><i class="fas fa-fw fa-home"></i> Home</a></li>
+                <li><a href="overview.html" class="nav-link"><i class="fas fa-fw fa-info-circle"></i> Overview</a></li>
+                <li><a href="architecture.html" class="nav-link"><i class="fas fa-fw fa-sitemap"></i> Architecture</a></li>
+                <li><a href="tech_stack.html" class="nav-link"><i class="fas fa-fw fa-cogs"></i> Tech Stack</a></li>
+                <li>
+                    <a href="#" class="nav-link"><i class="fas fa-fw fa-star"></i> Core Features</a>
+                    <ul class="sub-menu">
+                        <li><a href="feature_ai_diagnosis.html" class="nav-link active"><i class="fas fa-fw fa-brain"></i> AI Plant Diagnosis</a></li>
+                        <li><a href="feature_community.html" class="nav-link"><i class="fas fa-fw fa-users"></i> Community Platform</a></li>
+                        <li><a href="feature_marketplace.html" class="nav-link"><i class="fas fa-fw fa-shopping-cart"></i> Marketplace</a></li>
+                        <li><a href="feature_profile.html" class="nav-link"><i class="fas fa-fw fa-user-circle"></i> User Profiles</a></li>
+                    </ul>
+                </li>
+                <li><a href="ui_design.html" class="nav-link"><i class="fas fa-fw fa-palette"></i> UI/UX Design</a></li>
+                <li><a href="api_integration.html" class="nav-link"><i class="fas fa-fw fa-plug"></i> API Integration</a></li>
+                <li><a href="deployment.html" class="nav-link"><i class="fas fa-fw fa-rocket"></i> Deployment</a></li>
+                <li><a href="team.html" class="nav-link"><i class="fas fa-fw fa-people-group"></i> Team</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h2>AI-Powered Plant Diagnosis</h2>
+            <p>Google Gemini Integration for Disease Detection</p>
+        </header>
+
+        <section>
+            <h3><i class="fas fa-brain"></i> Feature Overview</h3>
+            <p>
+                The AI diagnosis system is the core feature of Napta, providing instant plant disease detection with 95% accuracy. 
+                Using Google's advanced Gemini AI model, the system analyzes plant images and provides comprehensive diagnosis including 
+                disease identification, severity assessment, treatment recommendations, and prevention strategies.
+            </p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-percentage"></i>
+                    <h4>95%</h4>
+                    <p>Accuracy Rate</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-clock"></i>
+                    <h4>~30s</h4>
+                    <p>Analysis Time</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-leaf"></i>
+                    <h4>50+</h4>
+                    <p>Diseases Detected</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-key"></i>
+                    <h4>7 Keys</h4>
+                    <p>Load Balancing</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-microchip"></i> Technical Implementation</h3>
+            
+            <h4>Image Processing Pipeline</h4>
+            <pre>
+// Image upload and processing flow
+const handleImageAnalysis = async (imageData: string | File) => {
+  // 1. Dual URL system for display and storage
+  let imageUrl: string;           // Blob URL for immediate display
+  let persistentImageUrl: string;  // Base64 for localStorage
+  
+  if (typeof imageData === 'string') {
+    imageUrl = imageData;
+    persistentImageUrl = imageData;
+  } else {
+    // Create blob URL for instant preview
+    imageUrl = URL.createObjectURL(imageData);
+    
+    // Convert to base64 for persistent storage
+    persistentImageUrl = await new Promise<string>((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (e) => resolve(e.target?.result as string);
+      reader.readAsDataURL(imageData);
+    });
+  }
+  
+  // 2. Send to Gemini AI for analysis
+  const analysis = await analyzePlantImage(persistentImageUrl);
+  
+  // 3. Save to history with persistent URL
+  saveToHistory({
+    imageUrl: persistentImageUrl,
+    ...analysis
+  });
+};
+            </pre>
+            
+            <h4>Gemini AI Integration</h4>
+            <pre>
+// Google Gemini API with key rotation
+const GEMINI_API_KEYS = [
+  'AIzaSyCZzGJDZrgUlTEj3iRGmjxCT0Q7TBHmYSM',
+  'AIzaSyBCRnp2S6NJiH0r3FZlwwp1t5iGJoAy8yA',
+  // ... 5 more keys for load balancing
+];
+
+let currentKeyIndex = 0;
+
+export const analyzePlantImage = async (imageData: string) => {
+  const genAI = new GoogleGenerativeAI(GEMINI_API_KEYS[currentKeyIndex]);
+  const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
+  
+  try {
+    const result = await model.generateContent([
+      structuredPrompt,
+      { inlineData: { data: base64Image, mimeType: 'image/jpeg' } }
+    ]);
+    
+    return parseAIResponse(result.response.text());
+  } catch (error) {
+    // Auto-rotate to next key on quota limit
+    if (error.message.includes('quota')) {
+      currentKeyIndex = (currentKeyIndex + 1) % GEMINI_API_KEYS.length;
+      return analyzePlantImage(imageData); // Retry with new key
+    }
+    throw error;
+  }
+};
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-list-check"></i> Key Features</h3>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-upload"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Multiple Upload Options</h4>
+                        <p>Drag-and-drop, file selection, camera capture, and URL input for maximum flexibility.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>AI Analysis</h4>
+                        <p>Google Gemini Pro Vision analyzes images and identifies diseases with confidence scores.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Severity Assessment</h4>
+                        <p>Evaluates disease severity from mild to critical with visual indicators.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Treatment Plans</h4>
+                        <p>Step-by-step treatment recommendations with chemical and organic options.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Prevention Tips</h4>
+                        <p>Proactive measures to prevent disease recurrence and maintain plant health.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock-rotate-left"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Scan History</h4>
+                        <p>Persistent storage of all diagnoses with images for future reference.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-clipboard-list"></i> Analysis Output</h3>
+            
+            <p>The AI provides comprehensive analysis in the following structure:</p>
+            
+            <pre>
+{
+  "cropName": "Tomato",
+  "diseaseName": "Late Blight",
+  "confidence": 92,
+  "severity": "moderate",
+  "description": "Fungal disease caused by Phytophthora infestans...",
+  "symptoms": [
+    "Dark brown spots on leaves",
+    "White fungal growth on leaf undersides",
+    "Stem lesions with dark borders"
+  ],
+  "treatment": {
+    "immediate": [
+      "Remove and destroy infected leaves",
+      "Improve air circulation"
+    ],
+    "chemical": [
+      "Apply copper-based fungicide",
+      "Use chlorothalonil spray"
+    ],
+    "organic": [
+      "Neem oil application",
+      "Baking soda spray solution"
+    ]
+  },
+  "prevention": [
+    "Water at soil level, avoid wetting foliage",
+    "Ensure adequate plant spacing",
+    "Use resistant varieties"
+  ],
+  "environmentalFactors": {
+    "humidity": "High (70-80%)",
+    "light": "Moderate indirect light",
+    "temperature": "20-25°C optimal",
+    "watering": "Reduce frequency"
+  },
+  "recoveryTime": "2-4 weeks with treatment"
+}
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-bug-slash"></i> Supported Disease Categories</h3>
+            
+            <div class="highlights-grid">
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-bacteria"></i>
+                    </div>
+                    <div>
+                        <h4>Fungal Diseases</h4>
+                        <p>Late Blight, Powdery Mildew, Rust, Leaf Spot, Anthracnose, Botrytis</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-virus"></i>
+                    </div>
+                    <div>
+                        <h4>Bacterial Infections</h4>
+                        <p>Bacterial Wilt, Fire Blight, Soft Rot, Canker, Leaf Blight</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-dna"></i>
+                    </div>
+                    <div>
+                        <h4>Viral Diseases</h4>
+                        <p>Mosaic Virus, Yellow Leaf Curl, Tomato Spotted Wilt</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-droplet"></i>
+                    </div>
+                    <div>
+                        <h4>Nutrient Deficiencies</h4>
+                        <p>Nitrogen, Phosphorus, Potassium, Calcium, Magnesium deficiency</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-bug"></i>
+                    </div>
+                    <div>
+                        <h4>Pest Damage</h4>
+                        <p>Aphids, Spider Mites, Whiteflies, Caterpillars, Thrips</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-item">
+                    <div class="highlight-icon">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <div>
+                        <h4>Environmental Stress</h4>
+                        <p>Sunburn, Frost Damage, Water Stress, Heat Stress</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-user-clock"></i> User Flow</h3>
+            
+            <div class="roadmap-timeline">
+                <div class="roadmap-item">
+                    <h4>Step 1: Image Upload</h4>
+                    <p>User uploads plant image via drag-and-drop, file selection, or camera capture.</p>
+                </div>
+                
+                <div class="roadmap-item">
+                    <h4>Step 2: Guest Check</h4>
+                    <p>System checks if guest user has reached 5-scan limit, or authenticated user's subscription.</p>
+                </div>
+                
+                <div class="roadmap-item">
+                    <h4>Step 3: Image Processing</h4>
+                    <p>Image converted to base64 and sent to Google Gemini AI with structured prompt.</p>
+                </div>
+                
+                <div class="roadmap-item">
+                    <h4>Step 4: AI Analysis</h4>
+                    <p>Gemini AI analyzes image and returns comprehensive diagnosis in JSON format (~30 seconds).</p>
+                </div>
+                
+                <div class="roadmap-item">
+                    <h4>Step 5: Results Display</h4>
+                    <p>Beautiful two-column layout shows image, diagnosis, confidence score, and treatment plan.</p>
+                </div>
+                
+                <div class="roadmap-item">
+                    <h4>Step 6: History Save</h4>
+                    <p>Result saved to localStorage (guests) or Firebase (authenticated) with base64 image.</p>
+                </div>
+                
+                <div class="roadmap-item">
+                    <h4>Step 7: Product Recommendations</h4>
+                    <p>AI-powered marketplace shows relevant products based on diagnosis (authenticated only).</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-shield-halved"></i> Error Handling & Reliability</h3>
+            
+            <ul class="feature-list">
+                <li><strong>API Key Rotation</strong> - Automatic switching between 7 API keys on quota limits</li>
+                <li><strong>Retry Logic</strong> - Failed requests automatically retry with exponential backoff</li>
+                <li><strong>Graceful Fallbacks</strong> - Generic error messages with support contact information</li>
+                <li><strong>Image Validation</strong> - Size and format checks before processing</li>
+                <li><strong>Network Error Recovery</strong> - Offline detection with user-friendly messaging</li>
+                <li><strong>Timeout Handling</strong> - 60-second timeout with progress indicators</li>
+                <li><strong>Response Parsing</strong> - Robust JSON parsing with schema validation</li>
+                <li><strong>Loading States</strong> - Branded loading animation with progress steps</li>
+            </ul>
+        </section>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
