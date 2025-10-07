@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Napta (نبتة) | Firebase Schema</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="sidebar">
+        <h1><i class="fas fa-leaf"></i> Napta Web</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="nav-link"><i class="fas fa-fw fa-home"></i> Home</a></li>
+                <li><a href="overview.html" class="nav-link"><i class="fas fa-fw fa-info-circle"></i> Overview</a></li>
+                <li><a href="architecture.html" class="nav-link"><i class="fas fa-fw fa-sitemap"></i> Architecture</a></li>
+                <li><a href="tech_stack.html" class="nav-link"><i class="fas fa-fw fa-cogs"></i> Tech Stack</a></li>
+                <li>
+                    <a href="#" class="nav-link"><i class="fas fa-fw fa-star"></i> Core Features</a>
+                    <ul class="sub-menu">
+                        <li><a href="feature_ai_diagnosis.html" class="nav-link"><i class="fas fa-fw fa-brain"></i> AI Plant Diagnosis</a></li>
+                        <li><a href="feature_community.html" class="nav-link"><i class="fas fa-fw fa-users"></i> Community Platform</a></li>
+                        <li><a href="feature_marketplace.html" class="nav-link"><i class="fas fa-fw fa-shopping-cart"></i> Marketplace</a></li>
+                        <li><a href="feature_profile.html" class="nav-link"><i class="fas fa-fw fa-user-circle"></i> User Profiles</a></li>
+                    </ul>
+                </li>
+                <li><a href="ui_design.html" class="nav-link"><i class="fas fa-fw fa-palette"></i> UI/UX Design</a></li>
+                <li><a href="api_integration.html" class="nav-link"><i class="fas fa-fw fa-plug"></i> API Integration</a></li>
+                <li><a href="deployment.html" class="nav-link"><i class="fas fa-fw fa-rocket"></i> Deployment</a></li>
+                <li><a href="firebase_schema.html" class="nav-link active"><i class="fas fa-fw fa-database"></i> Firebase Schema</a></li>
+                <li><a href="team.html" class="nav-link"><i class="fas fa-fw fa-people-group"></i> Team</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h2>Firebase Realtime Database Schema</h2>
+            <p>A detailed look at the data structures used in Napta's backend.</p>
+        </header>
+
+        <section>
+            <h3><i class="fas fa-database"></i> Schema Overview</h3>
+            <p>
+                The Firebase Realtime Database is structured as a single large JSON tree. Data is denormalized to optimize for read performance, which is crucial for a real-time application like Napta. Below are the main top-level collections.
+            </p>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-users"></i> /users</h3>
+            <p>Stores public user profile information.</p>
+            <pre>
+{
+  "users": {
+    "[user_uid]": {
+      "displayName": "string",
+      "photoURL": "string",
+      "reputation": "number",
+      "postCount": "number",
+      "commentCount": "number",
+      "badges": {
+        "[badgeId]": "boolean"
+      },
+      "stats": {
+        "scansCompleted": "number",
+        "postsCreated": "number",
+        "reputation": "number"
+      },
+      "sellerStatus": "'none' | 'pending' | 'approved' | 'suspended'",
+      "sellerTier": "'free' | 'khabeer'",
+      "userType": "'user' | 'admin'"
+    }
+  }
+}
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-comments"></i> /posts</h3>
+            <p>Contains all community posts.</p>
+            <pre>
+{
+  "posts": {
+    "[post_id]": {
+      "authorUid": "string",
+      "authorDisplayName": "string",
+      "authorPhotoURL": "string",
+      "channelId": "string",
+      "title": "string",
+      "content": "string",
+      "imageUrls": ["string"],
+      "timestamp": "number",
+      "voteCount": "number",
+      "commentCount": "number",
+      "isNaptaScanned": "boolean",
+      "naptaAnalysis": {
+        "disease": "string",
+        "confidence": "number",
+        "severity": "string"
+      }
+    }
+  }
+}
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-comment-dots"></i> /comments</h3>
+            <p>Comments for each post, nested by post ID.</p>
+            <pre>
+{
+  "comments": {
+    "[post_id]": {
+      "[comment_id]": {
+        "authorUid": "string",
+        "authorDisplayName": "string",
+        "authorPhotoURL": "string",
+        "content": "string",
+        "timestamp": "number",
+        "voteCount": "number"
+      }
+    }
+  }
+}
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-heart"></i> /postVotes</h3>
+            <p>Tracks which users have voted on which posts.</p>
+            <pre>
+{
+  "postVotes": {
+    "[post_id]": {
+      "[user_uid]": "boolean"
+    }
+  }
+}
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-hashtag"></i> /channels</h3>
+            <p>Defines the available community channels.</p>
+            <pre>
+{
+  "channels": {
+    "[channel_id]": {
+      "name": "string",
+      "description": "string",
+      "postCount": "number"
+    }
+  }
+}
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-store"></i> /sellers</h3>
+            <p>Profiles for marketplace sellers.</p>
+            <pre>
+{
+  "sellers": {
+    "[seller_uid]": {
+      "uid": "string",
+      "storeName": "string",
+      "nationalId": "string",
+      "description": "string",
+      "payoutInfo": {
+        "bankName": "string",
+        "accountNumber": "string",
+        "accountHolderName": "string"
+      },
+      "sellerStatus": "'none' | 'pending' | 'approved' | 'suspended'",
+      "sellerTier": "'free' | 'khabeer'",
+      "rating": "number",
+      "totalSales": "number",
+      "joinedAt": "number"
+    }
+  }
+}
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-box"></i> /products</h3>
+            <p>All products available in the marketplace.</p>
+            <pre>
+{
+  "products": {
+    "[product_id]": {
+      "sellerId": "string",
+      "sellerName": "string",
+      "title": "string",
+      "description": "string",
+      "category": "string",
+      "price": {
+        "amount": "number",
+        "currency": "string",
+        "unit": "string"
+      },
+      "images": ["string"],
+      "stock": "number",
+      "isActive": "boolean",
+      "isFeatured": "boolean",
+      "tags": ["string"],
+      "relatedDiseases": ["string"],
+      "createdAt": "number"
+    }
+  }
+}
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-shopping-cart"></i> /carts</h3>
+            <p>User shopping carts.</p>
+            <pre>
+{
+  "carts": {
+    "[user_uid]": {
+      "[product_id]": {
+        "productId": "string",
+        "quantity": "number",
+        "addedAt": "number"
+      }
+    }
+  }
+}
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-receipt"></i> /orders</h3>
+            <p>All customer orders.</p>
+            <pre>
+{
+  "orders": {
+    "[order_id]": {
+      "buyerId": "string",
+      "items": [
+        {
+          "productId": "string",
+          "quantity": "number",
+          "unitPrice": "number"
+        }
+      ],
+      "totalAmount": "number",
+      "shippingAddress": { ... },
+      "paymentMethod": "string",
+      "status": "'pending' | 'confirmed' | 'shipped' | 'delivered' | 'cancelled'",
+      "createdAt": "number"
+    }
+  }
+}
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-star-half-alt"></i> /productReviews</h3>
+            <p>Reviews for marketplace products.</p>
+            <pre>
+{
+  "productReviews": {
+    "[review_id]": {
+      "productId": "string",
+      "buyerId": "string",
+      "rating": "number",
+      "review": "string",
+      "createdAt": "number"
+    }
+  }
+}
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-user-check"></i> /sellerApplications</h3>
+            <p>Applications from users wanting to become sellers.</p>
+            <pre>
+{
+  "sellerApplications": {
+    "[user_uid]": {
+      "uid": "string",
+      "applicationData": { ... },
+      "status": "'pending' | 'approved' | 'rejected'",
+      "submittedAt": "number"
+    }
+  }
+}
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-history"></i> /stories</h3>
+            <p>User stories (ephemeral content).</p>
+            <pre>
+{
+  "stories": {
+    "[story_id]": {
+      "authorUid": "string",
+      "imageUrl": "string",
+      "timestamp": "number",
+      "expiresAt": "number",
+      "views": ["user_uid"],
+      "reactions": {
+        "[user_uid]": "boolean"
+      },
+      "reactionCount": "number"
+    }
+  }
+}
+            </pre>
+        </section>
+
+        <section>
+            <h3><i class="fas fa-reply"></i> /storyComments</h3>
+            <p>Comments on user stories.</p>
+            <pre>
+{
+  "storyComments": {
+    "[story_id]": {
+      "[comment_id]": {
+        "authorUid": "string",
+        "content": "string",
+        "timestamp": "number"
+      }
+    }
+  }
+}
+            </pre>
+        </section>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

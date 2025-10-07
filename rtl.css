@@ -1,0 +1,59 @@
+body[dir="rtl"] {
+    text-align: right;
+}
+
+body[dir="rtl"] .sidebar {
+    left: auto;
+    right: 0;
+    border-right: none;
+    border-left: 1px solid #e5e7eb;
+}
+
+body[dir="rtl"] .main-content {
+    margin-left: auto;
+    margin-right: 280px;
+}
+
+body[dir="rtl"] .sidebar nav a .fa-fw {
+    margin-right: auto;
+    margin-left: 12px;
+}
+
+body[dir="rtl"] .sidebar .sub-menu {
+    padding-left: auto;
+    padding-right: 40px;
+}
+
+body[dir="rtl"] section h3 {
+    gap: 12px;
+}
+
+body[dir="rtl"] .highlight-item {
+    border-left: auto;
+    border-right: 4px solid var(--primary-color);
+}
+
+body[dir="rtl"] ul.feature-list li, body[dir="rtl"] ul.benefit-list li {
+    padding-left: auto;
+    padding-right: 28px;
+}
+
+body[dir="rtl"] ul.feature-list li::before, body[dir="rtl"] ul.benefit-list li::before {
+    left: auto;
+    right: 0;
+}
+
+body[dir="rtl"] .roadmap-timeline {
+    padding-left: auto;
+    padding-right: 40px;
+}
+
+body[dir="rtl"] .roadmap-timeline::before {
+    left: auto;
+    right: 15px;
+}
+
+body[dir="rtl"] .roadmap-item::before {
+    left: auto;
+    right: -32px;
+}
